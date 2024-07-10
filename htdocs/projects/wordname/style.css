@@ -1,0 +1,19 @@
+body{
+	text-align: center;
+	background-color: aquamarine;
+	color:  darkmagenta;
+	font-family:  Georgia, 'Times New Roman', Times, serif;
+	font-size:  150%;
+}
+h2{
+	text-align: left;
+	width: 10%;
+	margin: auto;
+}
+a{
+	color:black;
+	text-align: left;
+}
+img{
+	position: relative;
+}
