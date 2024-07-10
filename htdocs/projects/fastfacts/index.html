@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Fast Facts Practice</h1>
+  <br>
+  <table>
+    <tr>
+      <th class="tableheader"></th>
+      <th id="category0" class="tableheader">Category0</th>
+      <th id="category1" class="tableheader">Category1</th>
+      <th id="category2" class="tableheader">Category2</th>
+      <th id="category3" class="tableheader">Category3</th>
+      <th id="category4" class="tableheader">Category4</th>
+    </tr>
+    <tr>
+      <td class="letter">A</td>
+      <td class="fillout"><input type=text id="text11"></input></td>
+      <td class="fillout"><input type=text id="text12"></input></td>
+      <td class="fillout"><input type=text id="text13"></input></td>
+      <td class="fillout"><input type=text id="text14"></input></td>
+      <td class="fillout"><input type=text id="text15"></input></td>
+    </tr>
+    <tr>
+      <td class="letter">B</td>
+      <td class="fillout"><input type=text id="text21"></input></td>
+      <td class="fillout"><input type=text id="text22"></input></td>
+      <td class="fillout"><input type=text id="text23"></input></td>
+      <td class="fillout"><input type=text id="text24"></input></td>
+      <td class="fillout"><input type=text id="text25"></input></td>
+    </tr>
+    <tr>
+      <td class="letter">C</td>
+      <td class="fillout"><input type=text id="text31"></input></td>
+      <td class="fillout"><input type=text id="text32"></input></td>
+      <td class="fillout"><input type=text id="text33"></input></td>
+      <td class="fillout"><input type=text id="text34"></input></td>
+      <td class="fillout"><input type=text id="text35"></input></td>
+    </tr>
+    <tr>
+      <td class="letter">D</td>
+      <td class="fillout"><input type=text id="text41"></input></td>
+      <td class="fillout"><input type=text id="text42"></input></td>
+      <td class="fillout"><input type=text id="text43"></input></td>
+      <td class="fillout"><input type=text id="text44"></input></td>
+      <td class="fillout"><input type=text id="text45"></input></td>
+    </tr>
+    <tr>
+      <td class="letter">E</td>
+      <td class="fillout"><input type=text id="text51"></input></td>
+      <td class="fillout"><input type=text id="text52"></input></td>
+      <td class="fillout"><input type=text id="text53"></input></td>
+      <td class="fillout"><input type=text id="text53"></input></td>
+      <td class="fillout"><input type=text id="text55"></input></td>
+    </tr>
+  </table>
+  <br>
+  <br>
+  <h3 id="status">
+  </h3>
+  <button type="button" onclick="FastFacts()" id="start">START</button>
+  <br>
+  <br>
+  <button type='button' onclick="Check()" id="check">CHECK</button>
+  <br>
+  <br>
+  <button onclick="window.location.href = 'info.html';">Info</button>
+  <h3 id="time"></h3>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script type="application/json" src="answers.json"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
