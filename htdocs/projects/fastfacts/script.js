@@ -1,10 +1,13 @@
-//function to get the answers from the json file
-async function getJSON() {
-  return fetch('answers.json')
-    .then((response) => response.json())
-    .then((responseJson) => { return responseJson });
-}
-(async () => { window.answers = await getJSON(); window.categories = Object.keys(answers); })();
+var obj;
+var categories;
+var answers;
+
+fetch('answers.json')
+  .then(res => res.json())
+  .then(data => {
+    obj = data;
+   })
+  .then(data => {categories = Object.keys(obj); answers = obj;});
 
 
 //function to lower case a string
@@ -65,7 +68,7 @@ function Check() {
       inputs = document.querySelectorAll('input[type="text"]');
       categorio = document.getElementById('category' + j.toString()).innerHTML;
       num = 5 * i + j;
-      inputs[num].style.backgroundColor = answers[categorio].includes(lowerCase(inputs[num].value.trim())) ? "green" : "red";
+      inputs[num].style.color = answers[categorio].includes(lowerCase(inputs[num].value.trim())) ? "lime" : "red";
     }
   }
 
