@@ -1,2 +1,0 @@
-# Wordname
-Lorem Ipsum
