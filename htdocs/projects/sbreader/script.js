@@ -34,6 +34,9 @@ document.getElementById('skip-button').addEventListener('click', handleSkipOrNex
 document.getElementById('buzz-button').addEventListener('click', buzz);
 document.getElementById('reset-statistics').addEventListener('click', resetStats);
 document.getElementById('submit-answer-button').addEventListener('click', submitAnswer);
+document.getElementById('readingSlider').addEventListener('oninput', outputUpdate);
+
+
 
 async function loadAndStartQuestion() {
 
@@ -47,7 +50,7 @@ async function loadAndStartQuestion() {
     try {
         currentQuestion = JSON['questions'].random();
         document.getElementById('question-type').textContent = "TOSSUP " + currentQuestion.tossup_format + " " + currentQuestion.category;
-        startTossup();
+        startQuestion(false);
     } catch (error) {
         console.error('Error fetching question:', error);
         alert('Failed to load question. Please try again.');
@@ -57,32 +60,42 @@ async function loadAndStartQuestion() {
 let buzzTimeout;  // ⬅️ new global
 const BUZZ_TIME_LIMIT = 10; // seconds to buzz in after tossup starts
 
-function startTossup() {
-    answeringBonus = false;
+function startQuestion(isBonus) {
+    answeringBonus = isBonus;
     hasBuzzed = false;
     isPaused = false;
+
     document.getElementById('answer-result').innerHTML = '';
     document.getElementById('correction-button').classList.add('hidden');
     document.getElementById('answer-section').classList.add('hidden');
-    document.getElementById('answer-section').classList.add('hidden');
     document.getElementById('answer-input').value = '';
-    document.getElementById('buzz-button').disabled = false; // ✅ Allow buzzing right away
-    updateTimerBar(0);
+    document.getElementById('buzz-button').disabled = false;
 
-    questionWords = currentQuestion.tossup_question.split(' ');
-    currentWordIndex = 0;
+    const questionType = isBonus ? 'BONUS' : 'TOSSUP';
+    const format = isBonus ? currentQuestion.bonus_format : currentQuestion.tossup_format;
+    const category = currentQuestion.category;
+    const questionText = isBonus ? currentQuestion.bonus_question : currentQuestion.tossup_question;
+
+    document.getElementById('question-type').textContent = `${questionType} ${format} ${category}`;
     document.getElementById('question-text').textContent = '';
+
+    updateTimerBar(0);
     clearTimers();
-    // Start reading the question (tossup)
+
+    questionWords = questionText.split(' ');
+    currentWordIndex = 0;
+
+
+    let readingDelay = 700 - 6.9 * document.getElementById('readingSlider').value;
     readingInterval = setInterval(() => {
         if (currentWordIndex < questionWords.length) {
             document.getElementById('question-text').textContent += questionWords[currentWordIndex] + ' ';
             currentWordIndex++;
         } else {
             clearInterval(readingInterval);
-            startBuzzTimer(); // ✅ After reading finishes, start buzz timer
+            startBuzzTimer();
         }
-    }, 300);
+    }, readingDelay);
 
     hideAnswerResult();
 }
@@ -253,42 +266,12 @@ function submitAnswer() {
 
     if (!answeringBonus && isCorrect) {
         answeringBonus = true;
-        setTimeout(startBonus, Math.min(5000, (500 + 75 * currentQuestion.tossup_answer.split(' ').length)));
+        setTimeout(() => startQuestion(true), Math.min(5000, (500 + 75 * currentQuestion.tossup_answer.split(' ').length)));
     }
 
     updateScore();
 }
 
-
-function startBonus() {
-    updateTimerBar(0);
-    hasBuzzed = false;
-    answeringBonus = true;
-    document.getElementById('buzz-button').disabled = false;
-    document.getElementById('answer-section').classList.add('hidden');
-    document.getElementById('answer-input').value = '';
-    document.getElementById('question-type').textContent = 'BONUS ' + currentQuestion.bonus_format + " " + currentQuestion.category;
-    updateTimerBar(0);
-
-    questionWords = currentQuestion.bonus_question.split(' ');
-    currentWordIndex = 0;
-    document.getElementById('question-text').textContent = '';
-    document.getElementById('answer-result').innerHTML = '';
-    document.getElementById('correction-button').classList.add('hidden');
-
-    clearTimers();
-    readingInterval = setInterval(() => {
-        if (currentWordIndex < questionWords.length) {
-            document.getElementById('question-text').textContent += questionWords[currentWordIndex] + ' ';
-            currentWordIndex++;
-        } else {
-            clearInterval(readingInterval);
-            startBuzzTimer();
-        }
-    }, 300);
-
-    hideAnswerResult();
-}
 
 function validateAnswer(playerAnswer, correctAnswer) {
     playerAnswer = sanitizeResponse(playerAnswer.trim()).toUpperCase();
@@ -347,7 +330,7 @@ function correctScore(wasCorrect) {
     } else {
         score += answeringBonus ? 10 : 8;
         if (!answeringBonus) {
-            setTimeout(startBonus, 1000);
+            setTimeout(() => startQuestion(true), 1000);
         }
     }
     updateScore();
@@ -463,4 +446,9 @@ function resetStats() {
 
 function sanitizeResponse(response) {
     return response.replace(/`/g, "")
+}
+
+function outputUpdate() {
+    console.log('update!');
+    document.getElementById('readingValue').innerText = document.getElementById('readingSlider').value;
 }

@@ -35,6 +35,12 @@
             <button id="submit-answer-button" class="btn green-btn">Submit</button>
         </div>
 
+        <div class="slidecontainer">
+            <label for="readingSlider">Reading Speed:</label>
+            <input oninput="document.getElementById('readingValue').innerText = document.getElementById('readingSlider').value" type="range" min="0" max="100" value="70" class="slider" id="readingSlider">
+            <label for="readingSlider" id="readingValue">70</label>
+        </div>
+
         <!-- Question Display Section -->
         <div id="question-section">
             <h2 id="question-type"></h2>
