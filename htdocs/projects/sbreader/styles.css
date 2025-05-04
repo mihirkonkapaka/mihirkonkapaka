@@ -23,7 +23,6 @@ body {
     overflow: hidden;
 }
 
-
 .header-prefix {
     color: #8000ff;
 }
@@ -35,11 +34,43 @@ body {
     overflow-y: auto;
 }
 
+/* Layout container for left and right split */
+#main-split {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+#left-panel {
+    flex: 1;
+    min-width: 300px;
+}
+
+#right-panel {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+}
+
 /* Question Display */
 #question-section {
-    padding: 20px 0;
-    font-size: 12pt;
+    padding: 5px 10px;
+    padding-top: 2px;
+    font-size: 15pt;
     line-height: 1.6;
+    background: #2e2b3c;
+    border-radius: 10px;
+}
+
+#question-type {
+    font-weight: bold;
+    font-size: 32px;
 }
 
 #answer-result,
@@ -50,7 +81,11 @@ body {
 }
 
 #answer-result {
-    margin-top: 10px;
+    margin-top: 13px;
+    border-top: white;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-radius: 3px;
 }
 
 #correction-button {
@@ -81,12 +116,13 @@ body {
 
 /* Timer */
 #timer-container {
-    width: 90%;
+    width: 100%;
+    max-width: 450px;
     height: 24px;
-    margin: 20px auto 0;
     border-radius: 12px;
     position: relative;
     overflow: hidden;
+    background-color: #2e2b3c;
 }
 
 #timer-bar {
@@ -108,7 +144,7 @@ body {
 
 /* Score */
 .tracker {
-    text-align: center;
+    text-align: left;
     margin-top: 12px;
 }
 
@@ -124,10 +160,15 @@ body {
     flex-wrap: wrap;
     position: fixed;
     justify-content: space-between;
+    background-color: #2b282f;
 }
 
 /* Utility Classes */
 .hidden * {
+    display: none !important;
+}
+
+.hidden {
     display: none !important;
 }
 
@@ -143,9 +184,7 @@ body {
 .btn {
     display: inline-block;
     padding: 0.375rem 0.75rem;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-        "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
-        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: inherit;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -234,22 +273,22 @@ body {
     text-decoration: underline;
 }
 
+/* Links */
 a {
     text-decoration: none;
     color: inherit;
-    /* Keep it consistent with surrounding text, override if needed */
     transition: color 0.3s ease;
 }
 
 a:hover {
     color: #8000ff;
-    /* or any highlight color you prefer */
 }
 
 .link {
     color: rgb(102, 153, 255);
 }
 
+/* Slider */
 .slider {
     -webkit-appearance: none;
     appearance: none;
@@ -259,7 +298,6 @@ a:hover {
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
-    -webkit-transition: .2s;
     transition: opacity .2s;
 }
 
@@ -279,4 +317,44 @@ a:hover {
     border-radius: 50%;
     background: #8000ff;
     cursor: pointer;
+}
+
+/* Category Dropdown */
+#category-select {
+    padding: 8px 12px;
+    font-size: 14pt;
+    color: white;
+    background-color: #2b282f;
+    border: 2px solid #8000ff;
+    border-radius: 6px;
+    appearance: none;
+}
+
+#category-select:focus {
+    outline: none;
+    border-color: #a35fff;
+}
+
+/* Labels */
+label {
+    color: white;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.slidecontainer {
+    width: 100%;
+    max-width: 200px;
+    text-align: right;
+}
+
+#readingValue {
+    display: inline-block;
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+#right-panel.hidden {
+    display: none;
 }

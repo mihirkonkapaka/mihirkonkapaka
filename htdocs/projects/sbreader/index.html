@@ -21,43 +21,64 @@
     <header>
         <nav class="navbar">
             <h1 class="navbar-title">
-                <a href="./index.html"><span class="header-prefix">SB</span><span class="header-suffix">Reader</span></a>
+                <a href="./index.html"><span class="header-prefix">SB</span><span
+                        class="header-suffix">Reader</span></a>
             </h1>
             <a class="navbar-link" href="./about.html">About</a>
         </nav>
     </header>
 
-
     <div id="main-content">
-        <!-- Answer Input Section -->
-        <div id="answer-section" class="hidden">
-            <input type="text" id="answer-input" placeholder="Type your answer..." autocomplete="off" />
-            <button id="submit-answer-button" class="btn green-btn">Submit</button>
-        </div>
+        <div id="main-split">
+            <!-- Left Panel -->
+            <div id="left-panel">
+                <div id="score-display" class="tracker">0/0/0 with 0 tossups seen</div>
+                <div id="answer-section" class="hidden">
+                    <input type="text" id="answer-input" placeholder="Type your answer..." autocomplete="off" />
+                    <button id="submit-answer-button" class="btn green-btn">Submit</button>
+                </div>
 
-        <div class="slidecontainer">
-            <label for="readingSlider">Reading Speed:</label>
-            <input oninput="document.getElementById('readingValue').innerText = document.getElementById('readingSlider').value" type="range" min="0" max="100" value="70" class="slider" id="readingSlider">
-            <label for="readingSlider" id="readingValue">70</label>
-        </div>
+                <div id="question-section">
+                    <div id="question-type"></div>
+                    <p id="question-text"></p>
+                    <div id="answer-result" class="hidden"></div>
+                    <div id="correction-button" class="hidden"></div>
+                </div>
+            </div>
 
-        <!-- Question Display Section -->
-        <div id="question-section">
-            <h2 id="question-type"></h2>
-            <p id="question-text"></p>
-            <div id="answer-result"></div>
-            <div id="correction-button" class="hidden"></div>
-        </div>
+            <!-- Right Panel -->
+            <div id="right-panel">
+                <div id="timer-container">
+                    <div id="timer-bar">
+                        <span id="timer-text"></span>
+                    </div>
+                </div>
 
-        <!-- Timer Progress Section -->
-        <div id="timer-container">
-            <div id="timer-bar">
-                <span id="timer-text"></span>
+                <div>
+                    <label for="category-select">Category:</label>
+                    <select id="category-select">
+                        <option value="any">All Categories</option>
+                        <option value="biology">Biology</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="physics">Physics</option>
+                        <option value="math">Math</option>
+                        <option value="earth and space">Earth and Space Science</option>
+                        <option value="energy">Energy</option>
+                        <option value="general">General Science</option>
+                    </select>
+                </div>
+
+                <div class="slidecontainer">
+                    <label for="readingSlider">Reading Speed:
+                        <span id="readingValue">70</span>
+                    </label>
+                    <input
+                        oninput="document.getElementById('readingValue').innerText = document.getElementById('readingSlider').value"
+                        type="range" min="0" max="100" value="70" class="slider" id="readingSlider">
+                </div>
+
             </div>
         </div>
-
-        <!-- Score Tracker -->
-        <div id="score-display" class="tracker">Score: 0</div>
     </div>
 
     <div id="bottom-bar">
@@ -66,6 +87,7 @@
             <button id="pause-button" class="btn std-btn">Pause</button>
             <button id="skip-button" class="btn std-btn">Skip Question</button>
             <button id="reset-statistics" class="btn std-btn">Reset Statistics</button>
+            <button id="toggle-panel-button" class="btn red-btn">⚙️</button>
         </div>
         <div id="right-buttons">
             <button id="buzz-button" class="btn red-btn">Buzz</button>

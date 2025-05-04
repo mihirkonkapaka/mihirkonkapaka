@@ -14,6 +14,10 @@ const TOSSUP_TIME_LIMIT = 20; // seconds
 const BONUS_TIME_LIMIT = 40; // seconds
 var time = 0;
 let regularBuzzTime = 0;
+let tossupsSeen = 0;
+let tossupsCorrect = 0;
+let bonusesCorrect = 0;
+let negs = 0;
 
 let currentQuestion = {};
 
@@ -36,19 +40,43 @@ document.getElementById('reset-statistics').addEventListener('click', resetStats
 document.getElementById('submit-answer-button').addEventListener('click', submitAnswer);
 document.getElementById('readingSlider').addEventListener('oninput', outputUpdate);
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggle-panel-button");
+    const rightPanel = document.getElementById("right-panel");
+
+    toggleButton.addEventListener("click", () => {
+        rightPanel.classList.toggle("hidden");
+    });
+});
+
+
 
 
 async function loadAndStartQuestion() {
-
-    document.getElementById('pause-button').textContent = 'Pause'
+    tossupsSeen++;
+    document.getElementById('pause-button').textContent = 'Pause';
     readyForNext = false;
     document.getElementById('skip-button').textContent = 'Skip Question';
 
-    // Clear all timers and reset states before starting a new question
     clearTimers();
 
     try {
-        currentQuestion = JSON['questions'].random();
+        const selectedCategory = document.getElementById('category-select').value;
+        let questionsPool;
+
+        if (selectedCategory == "any") {
+            questionsPool = JSON['questions'];
+        } else {
+            console.log(selectedCategory.toLowerCase);
+            questionsPool = JSON['questions'].filter(q => q.category.toLowerCase() == selectedCategory.toLowerCase());
+        }
+
+        if (questionsPool.length === 0) {
+            alert(`No questions found for category: ${selectedCategory}`);
+            return;
+        }
+
+        currentQuestion = questionsPool.random();
         document.getElementById('question-type').textContent = "TOSSUP " + currentQuestion.tossup_format + " " + currentQuestion.category;
         startQuestion(false);
     } catch (error) {
@@ -56,6 +84,7 @@ async function loadAndStartQuestion() {
         alert('Failed to load question. Please try again.');
     }
 }
+
 
 let buzzTimeout;  // ⬅️ new global
 const BUZZ_TIME_LIMIT = 10; // seconds to buzz in after tossup starts
@@ -253,9 +282,18 @@ function submitAnswer() {
     showAnswerResult(correctAnswer, isCorrect);
 
     if (isCorrect) {
-        score += answeringBonus ? 10 : 4;
+        if (answeringBonus) {
+            score += 10;
+            bonusesCorrect++;
+        } else {
+            score += 4;
+            tossupsCorrect++;
+        }
     } else {
-        if (!answeringBonus && !finishedTossup) score -= 4;
+        if (!answeringBonus && !finishedTossup){ 
+            score -= 4;
+            negs++;
+        }
     }
 
     document.getElementById('correction-button').innerHTML = `<button onclick="correctScore(${isCorrect})" class="btn ${isCorrect ? 'red' : 'green'}-btn">${isCorrect ? 'I was wrong' : 'I was correct'}</button>`;
@@ -338,7 +376,7 @@ function correctScore(wasCorrect) {
 }
 
 function updateScore() {
-    document.getElementById('score-display').textContent = `Score: ${score}`;
+    document.getElementById('score-display').textContent = `${bonusesCorrect}/${tossupsCorrect}/${negs} with ${tossupsSeen} tossups seen`;
 }
 
 function showAnswerResult(correctAnswer, isCorrect) {
@@ -357,6 +395,7 @@ function showAnswerResult(correctAnswer, isCorrect) {
 
 function hideAnswerResult() {
     document.getElementById('answer-result').innerHTML = '';
+    document.getElementById('answer-result').className = 'hidden';
     document.getElementById('correction-button').classList.add('hidden');
 }
 
