@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landsat Question Generator</title>
+    <title>Remote Sensing Question Generator</title>
     <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-    <h1>🌍 Landsat Image Question Generator</h1>
+    <h1>🌍 Remote Sensing Image Question Generator</h1>
     <input id="image-url" placeholder="Enter Landsat image URL..." />
     <textarea id="description" placeholder="Enter image description..."></textarea>
     <button onclick="generate()">Generate & Save</button>
@@ -29,7 +29,7 @@
 
             const data = await res.json();
             if (data.questions) {
-                output.textContent = data.questions;
+                output.innerHTML = data.questions;
                 // Save result to your database
                 await fetch("save.php", {
                     method: "POST",
@@ -37,7 +37,7 @@
                     body: JSON.stringify({ image_url: url, description: desc, questions: data.questions })
                 });
             } else {
-                output.textContent = `Error: ${data.error}`;
+                output.innerHTML = `Error: ${data.error}`;
             }
         }
     </script>
