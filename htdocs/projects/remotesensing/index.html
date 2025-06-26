@@ -21,7 +21,7 @@
             const output = document.getElementById("output");
             output.textContent = "Loading…";
 
-            const res = await fetch("https://YOUR_RENDER_URL.onrender.com/generate", {
+            const res = await fetch("https://remotesensing.onrender.com/generate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ image_url: url, description: desc })
