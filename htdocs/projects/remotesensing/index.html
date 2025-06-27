@@ -10,32 +10,29 @@
 
 <body>
     <h1>🌍 Remote Sensing Image Question Generator</h1>
-    <input id="image-url" placeholder="Enter Landsat image URL..." />
-    <textarea id="description" placeholder="Enter image description..."></textarea>
     <button onclick="generate()">Generate & Save</button>
-    <div id="output" class="output">> Results will appear here...</div>
+    <div id="output-wrapper" class="output-wrapper">
+        <img src="" style="visibility: hidden;" id="output-img">
+        <div id="output" class="output">
+            > Results will appear here...
+        </div>
+    </div>
     <script>
         async function generate() {
-            const url = document.getElementById("image-url").value;
-            const desc = document.getElementById("description").value;
+            const output_wrapper = document.getElementById("output-wrapper");
             const output = document.getElementById("output");
             output.textContent = "Loading…";
+            image.src = url;
+            image.style = "max-width: 50%; sobject-fit: contain;";
 
             const res = await fetch("https://remotesensing.onrender.com/generate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ image_url: url, description: desc })
             });
 
             const data = await res.json();
             if (data.questions) {
-                output.innerHTML = data.questions;
-                // Save result to your database
-                await fetch("save.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ image_url: url, description: desc, questions: data.questions })
-                });
+                output_wrapper.innerHTML = data.questions;
             } else {
                 output.innerHTML = `Error: ${data.error}`;
             }

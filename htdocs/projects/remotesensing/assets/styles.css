@@ -24,7 +24,7 @@ button:hover {
     background: #005bb5;
 }
 
-.output {
+.output-wrapper {
     margin-top: 1em;
     white-space: pre-wrap;
     background: #fff;
