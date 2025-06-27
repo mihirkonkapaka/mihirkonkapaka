@@ -22,8 +22,6 @@
             const output_wrapper = document.getElementById("output-wrapper");
             const output = document.getElementById("output");
             output.textContent = "Loading…";
-            image.src = url;
-            image.style = "max-width: 50%; sobject-fit: contain;";
 
             const res = await fetch("https://remotesensing.onrender.com/generate", {
                 method: "POST",

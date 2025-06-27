@@ -32,3 +32,8 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 6px;
 }
+
+img {
+    max-width: 50%;
+    object-fit: contain;
+}
