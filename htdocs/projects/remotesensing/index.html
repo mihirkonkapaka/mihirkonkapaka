@@ -21,7 +21,10 @@
         async function generate() {
             const output_wrapper = document.getElementById("output-wrapper");
             const output = document.getElementById("output");
+            const image = document.getElementById("output-img");
             output.textContent = "Loading…";
+            image.style = "visibility: hidden;";
+
 
             const res = await fetch("https://remotesensing.onrender.com/generate", {
                 method: "POST",
