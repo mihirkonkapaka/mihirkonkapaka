@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Live ASCIIMath Renderer</title>
+    <script>
+        window.MathJax = {
+            loader: { load: ['input/asciimath', 'output/chtml'] },
+            asciimath: {
+                delimiters: [['`', '`']],
+            },
+            startup: {
+                typeset: false
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
+</head>
+
+<body>
+    <textarea id="inputBox">math</textarea>
+    <div id="outputBox"></div>
+
+    <script>
+        let questionWords = 'i am the `sigma`'.split(' ');
+        let readingDelay = 700;
+        let qText = ''
+        console.log(questionWords);
+        let currentWordIndex = 0;
+        readingInterval = setInterval(() => {
+            if (currentWordIndex < questionWords.length) {
+                qText += questionWords[currentWordIndex] + ' ';
+                const questionElem = document.getElementById('outputBox');
+                questionElem.textContent = qText.trim();  // Use innerHTML to preserve backticks
+                currentWordIndex++;
+                MathJax.typesetPromise([questionElem]);
+            } else {
+                clearInterval(readingInterval);
+                MathJax.typesetPromise([questionElem]);
+                startBuzzTimer();
+            }
+        }, readingDelay);
+    </script>
+
+</body>
+
+</html>
